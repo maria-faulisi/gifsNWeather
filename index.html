@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset='utf-8'>
+	<title>Gifs N Weather</title>
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans'>
+	<style type="text/css">
+		body{
+			font-family: 'PT Sans', sans-serif;
+		}
+		.header{
+			width: 1100px;
+			margin: 0 auto;
+		}
+		input{
+			height: 25px;
+			width: 300px;
+			padding: 0px;
+			size: 20px;
+		}
+		input::-moz-placeholder{
+			font-size: 15px;
+		}
+		input::-webkit-input-placeholder{
+			font-size: 15px;
+			line-height: 10px;
+			vertical-align: baseline;
+		}
+		input::placeholder{
+			font-size: 15px;
+		}
+		.submitZip{
+			margin-left: 20px;
+			height: 30px;
+			font-size: 14px;
+			background-color: white;
+		}
+		.headerLogo{
+			text-align: center;
+		}
+		.logo{
+			display: inline;
+			font-family: 'Helvetica' sans-serif;
+			font-weight: 700;
+			font-size: 8rem;
+			background-repeat: no-repeat;
+		}
+		.logo.gifs{
+			color: white;
+			padding: 25px;
+			height: auto;
+			width: 100%;
+			background-image:url('http://i.giphy.com/fMPopGhdzEDII.gif');
+			background-size: cover;
+		}
+		.logo.and{
+			color: orange;
+			font-size: 8rem;
+		}
+		.logo.weather{
+			color: transparent;
+			background-size: cover;
+			-webkit-background-clip: text;
+			background-clip: text;
+			height: auto;
+			width: 100%;
+			background-image: url('http://i.giphy.com/a0so7RIWDZBQc.gif');
+		}
+		.form{
+			margin: 0 auto;
+			margin-top: 25px;
+			background-color: orange;
+			padding: 2rem;
+			box-shadow: 0px 5px 5px #888888;
+		}
+		.weatherView{
+			width: 1000px;
+			height: auto;
+			margin: 0 auto;
+			margin-top: 5%;
+		}
+		.weatherWrap{
+			height: auto;
+			width: auto;
+		}
+		.weatherWrap:last-of-type{
+			padding-bottom: 100px;
+		}
+		.weatherTile{
+			position: relative;
+			margin: 10px;
+			float: left;
+			height: 375px;
+			width: 480px;
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+		}
+		.weatherInfo{
+			position: absolute;
+			bottom: 10px;
+			float: left;
+			height: auto;
+			width: 30%;
+			color: white;
+			text-align: center;
+		}
+		.weatherInfo.dark{
+			color: black;
+		}
+
+		.h1{
+			margin: 0px;
+			font-size: 5rem;
+		}
+		.h2{
+			margin: 0px;
+		}
+		.optionsContainer{
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+		}
+		.options{
+			background-color:darkorange;
+			margin-top: 0px;
+		}
+		.optionsContainer:hover{
+			opacity: 1;
+
+			-webkit-transition: opacity 0.25s;
+			-moz-transition: opacity 0.25s;
+			transition: opacity 0.25s;
+		}
+		.optionsText, .optionsDelete, .optionsNewGif{
+			padding-top: 15px;
+			float: left;
+			width: 160px;
+			height: 35px;
+			display: inline-block;
+			text-align: center;
+
+		}
+		.optionsText:hover, .optionsDelete:hover, .optionsNewGif:hover{
+			background-color: darkorange;
+		}
+		.footer{
+			clear: both;
+			width:1100px;
+			text-align: center;
+			margin: 0 auto;
+			padding-top: 50px;
+			padding-bottom: 25px;
+		}
+		@-moz-document url-prefix(){
+			.logo.weather{
+				background-image: none;
+				color: #0D208C;
+			}
+			.form{
+				margin-top: 17px;
+			}
+			.submitZip{
+				vertical-align: middle;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div id="appWrap" class="appWrap">
+		<header id="header" class="header">
+			<div class="headerLogo">
+				<h1 class="logo gifs">GIFS</h1>
+				<h1 class='logo and'>&amp</h1>
+				<h1 class= "logo weather">WEATHER</h1>				
+			</div>
+		</header><!-- /header -->
+			<form id="form" class="form">
+				<input id="zipCode" class="zipCode" placeholder="zipcode">
+				<button id="submitZip" class="submitZip" type="button">Get My Weather!</button>
+			</form>	
+		<div id="weatherView" class="weatherView"></div>
+	</div><!--closes appWrap-->
+	<footer class="footer">
+		<p>Powered by Wunderground Weather and Giphy APIs</p>
+	</footer>
+	<script type="text/template" id="weatherTemplate">
+		<div class="weatherTile" style="background-image:url('<%= source %>');">
+			<div class="weatherInfo">
+				<h2 class="h2"><%= city %></h2>
+				<h1 class="h1"><%= temp %>&#176</h1>
+				<h2 class="h2"><%= currentWeather %></h2>
+			</div>
+			<div class="optionsContainer hide">
+				<p class="options optionsText">DarkText</p>
+				<p class="options optionsDelete">Delete</p>
+				<p class="options optionsNewGif">New Gif</p>
+			</div>
+		</div>	
+
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.1.16/backbone.localStorage-min.js"></script>
+	<script type="text/javascript" src="view.js"></script>
+	<script type="text/javascript" src="model.js"></script>
+	<script type="text/javascript" src="collection.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+</body>
+</html>
