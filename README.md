@@ -6,11 +6,11 @@ Enter a zipcode and get the current weather along with a random gif.  Don't like
  with it?  Delete the weather tile.
  
  ##Tech used
- *Backbone.js
- *Wunderground and Giphy API's
- *JavaScript
- *JQuery
- *HTML
- *CSS
+ * Backbone.js
+ * Wunderground and Giphy API's
+ * JavaScript
+ * JQuery
+ * HTML
+ * CSS
 
 [See it here](http://iam.colum.edu/students/maria.faulisi/test/gifsNWeather/)
